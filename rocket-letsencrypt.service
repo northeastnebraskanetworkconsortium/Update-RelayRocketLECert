@@ -1,4 +1,5 @@
 # By Andy Boell
+# March 17, 2021
 
 [Unit]
 Description=Moves letsencrypt files to rocket folder
@@ -6,7 +7,8 @@ Wants=rocket-letsencrypt.timer
 
 [Service]
 Type=oneshot
-ExecStart=/opt/scripts/certbot2lightspeed.bash
+EnvironmentFile=/opt/scripts/.environmentFile
+ExecStart=/opt/scripts/certbot2lightspeed.bash $ARG1 $ARG2 $ARG3
 
 [Install]
 WantedBy=multi-user.target
