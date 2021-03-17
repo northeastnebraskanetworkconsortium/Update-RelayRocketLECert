@@ -1,14 +1,11 @@
 #!/bin/sh
 # Created by Andy Boell, NNNC
-# March 16, 2021
-# Implementation specific variables REQUIRED:
-#  - path to Let's Encrypt certificate <certificate FQDN>
-# Implementation specific varialbes OPTIONAL - only required if multiple Relay Rockets are installed on a farm
-#  - account name of FTP user <ftp user>
-#  - IP address of Relay Rocket on farm to copy certificate to <rocket IP>
+# March 17, 2021
+# 
+# Required parameter(s) in /opt/scripts/.environmentFile to be populated
 
 # Change directory
-cd /etc/letsencrypt/live/<certificate FQDN>
+cd /etc/letsencrypt/live/$1
 
 # Extract key from new certificate
 openssl pkey -in privkey.pem -out portal.key
@@ -25,6 +22,7 @@ chmod 640 portal.key
 # Change permissions on cert
 chmod 644 portal.crt
 
-# Copy files to next relay rocket
-scp /usr/local/rocket/etc/portal.* <ftp user>@<rocket IP>:/usr/local/rocket/letsencrypt/
-
+# Copy files to next relay rocket only if the ftp user is not null
+if [$2 != 'null']
+scp /usr/local/rocket/etc/portal.* $2@$3:/usr/local/rocket/letsencrypt/
+fi
