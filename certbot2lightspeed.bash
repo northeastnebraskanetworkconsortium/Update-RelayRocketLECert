@@ -23,6 +23,6 @@ chmod 640 portal.key
 chmod 644 portal.crt
 
 # Copy files to next relay rocket only if the ftp user is not null
-if [$2 != 'null']
-scp /usr/local/rocket/etc/portal.* $2@$3:/usr/local/rocket/letsencrypt/
+if [$2 != 'null']; then
+  scp /usr/local/rocket/etc/portal.* $2@$3:/usr/local/rocket/letsencrypt/
 fi
