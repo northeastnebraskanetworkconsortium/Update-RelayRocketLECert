@@ -11,10 +11,10 @@ sudo ln -s /snap/bin/certbot /usr/bin/certbot
 sudo certbot certonly --nginx
 ```
 ## File Locations
-certbot2lightspeed.bash - /opt/scripts/
-.environmentFile - /opt/scripts/
-rocket-letsencrypt.service - /etc/systemd/system/
-rocket-letsencrypt.timer - /etc/systemd/system/
+* certbot2lightspeed.bash - /opt/scripts/
+* .environmentFile - /opt/scripts/
+* rocket-letsencrypt.service - /etc/systemd/system/
+* rocket-letsencrypt.timer - /etc/systemd/system/
 
 ## File Modification
 The only file that requires any customization is the .environmentFile, located in /opt/scripts/.  The first argument of this file must contain the FQDN of the SSL certificate that Let's Encrypt is generating for the relayrocket.  
