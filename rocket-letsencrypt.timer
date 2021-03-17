@@ -1,0 +1,14 @@
+[Unit]
+Description=Timer copies certs to rocket directory and to other server
+#Requires=snap-certbot-1042.mount
+#After=snap-certbot-1042.mount
+#X-Snappy=yes
+
+[Timer]
+#Unit=snap.certbot.renew.service
+Unit=rocket-letsencrypt.service
+OnCalendar=*-*-* 08:07
+OnCalendar=*-*-* 23:32
+
+[Install]
+WantedBy=timers.target
