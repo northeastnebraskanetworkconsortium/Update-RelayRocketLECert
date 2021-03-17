@@ -30,3 +30,4 @@ Next, you must copy the public key to the remote server.  Again, the following c
 # Where <ftpuser> represents the ftp user on the remote server and <10.1.2.3> represents the IP address of the local server
 sudo -H ssh-copy-id <ftpuser>@<10.1.2.3>
 ```
+In a multiple server configuration, only one server needs to be configured with Certbot; the other server(s) simply need to receive the generated SSL certificate and have them placed in the correct location.
