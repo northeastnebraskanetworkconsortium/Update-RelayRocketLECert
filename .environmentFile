@@ -3,14 +3,14 @@
 # Parameters for Let's Encrypt to Relay Rocket automation
 
 # Required - the FQDN of the Relay Rocket used by Let's Encrypt
-#    i.e. $ARG1=relayrocket.school.org
+#    i.e. ARG1=relayrocket.school.org
 ARG1=
 
 # If sending Let's Encrypt certificate to another server in the farm, the following parameters are required.  
 #  - <ftp-user> - the name of a user with FTP access on the receiving server
-#    i.e. $ARG2=ftpuser
+#    i.e. ARG2=ftpuser
 #  - <receiving-IP> - the IP address receiving server 
-#    i.e. $ARG3=10.1.2.2
+#    i.e. ARG3=10.1.2.2
 # If not sending to another server, leave parameters as 'NULL'
 ARG2=NULL
 ARG3=NULL
