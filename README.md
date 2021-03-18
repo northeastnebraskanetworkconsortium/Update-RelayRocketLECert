@@ -27,13 +27,24 @@ The only other modification that is necessary is if there are multiple Relay Roc
 Once the files have been placed in the correct folders and the .environmentFile has been modified, the service timer needs to be started.
 ```bash
 systemctl enable rocket-letsencrypt.service
-systemctl start rocket-letsencrypt.service
 ```
-The service successfully runs when there is no output that follows the running of that command.  If you would like to manually verify the service is started, you may execute the following command:
+The service successfully runs when there is no output that follows the running of that command.  If you would like to manually verify the service is loaded, you may execute the following command:
 ```bash
 systemctl status rocket-letsencrypt.service
 ```
+You will get an output similar to
+```bash
+● rocket-letsencrypt.service - Moves letsencrypt files to rocket folder
+   Loaded: loaded (/etc/systemd/system/rocket-letsencrypt.service; enabled; vendor preset: enabled)
+   Active: inactive (dead) since Thu 2021-03-18 11:17:08 CDT; 14min ago
+  Process: 19803 ExecStart=/opt/scripts/certbot2lightspeed.bash $ARG1 $ARG2 $ARG3 (code=exited, status=0/SUCCESS)
+ Main PID: 19803 (code=exited, status=0/SUCCESS)
 
+Mar 18 11:17:08 relayrocket1 systemd[1]: Starting Moves letsencrypt files to rocket folder...
+Mar 18 11:17:08 relayrocket1 certbot2lightspeed.bash[19803]: pwd
+Mar 18 11:17:08 relayrocket1 certbot2lightspeed.bash[19803]: 1615413375
+Mar 18 11:17:08 relayrocket1 systemd[1]: Started Moves letsencrypt files to rocket folder.
+```
 
 ### Multiple Server Prequisites (optional)
 In order to seemlessly transfer the files between servers, the sending server must have a public/private key pair generated with the public key copied to the receiving server. The following command elevates the key generation to root, since systemd uses root for the execution of the timer. 
