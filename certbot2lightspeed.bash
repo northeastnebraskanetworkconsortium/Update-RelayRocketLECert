@@ -5,7 +5,7 @@
 # Required parameter(s) in /opt/scripts/.environmentFile to be populated
 
 # Flag to indicate last time script was ran
-echo $(id) > /opt/lastexecuted
+echo $(id) > /opt/scripts/lastexecuted
 
 # Change directory
 cd /etc/letsencrypt/live/$1
@@ -16,7 +16,7 @@ modified=`stat -c "%Y" privkey.pem`
 if [ $(($current-$modified)) -lt 86400 ]; then
 
   # Flag to indicate last time cert was copied
-  echo $(id) > /opt/lastcopied
+  echo $(id) > /opt/scripts/lastcopied
 
   # Extract key from new certificate
   openssl pkey -in privkey.pem -out portal.key
@@ -34,7 +34,7 @@ if [ $(($current-$modified)) -lt 86400 ]; then
   chmod 644 portal.crt
 
   # Copy files to next relay rocket only if the ftp user is not null
-  if [$2 != 'null']; then
+  if [$2 != 'NULL']; then
     scp /usr/local/rocket/etc/portal.* $2@$3:/usr/local/rocket/letsencrypt/
   fi
 fi
