@@ -157,4 +157,4 @@ As long as you have completed setup above, you can manually run the script by st
 ```bash
 systemctl start rocket-letsencrypt.service
 ```
-After 
+After the .service file has been executed at least once (either manually or by the .timer), one or two small files are generated for the sole purpose of marking the last time the script was ran (/opt/scripts/lastexecuted) and the last time the script copied and renamed the certificate (/opt/scripts/lastcopied).  The contents of the files just show you which user was used to execute the script, which will be root.  It's the date/time stamp of those files that tells you when it was executed last.
