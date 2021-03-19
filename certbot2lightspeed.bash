@@ -33,7 +33,10 @@ if [ $(($current-$modified)) -lt 86400 ]; then
   # Change permissions on cert
   chmod 644 portal.crt
 
-  # Copy files to next relay rocket only if the ftp user is not null
+  # Restart the Nginx Service
+  systemctl restart nginx.service
+
+# Copy files to next relay rocket only if the ftp user is not null
   if [$2 != 'NULL']; then
     scp /usr/local/rocket/etc/portal.* $2@$3:/usr/local/rocket/letsencrypt/
   fi
