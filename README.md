@@ -57,7 +57,7 @@ IMPORTANT NOTES:
 ```
 
 ## Update Script Installation
-Each of the following sections list instructions to follow in order to complete the installation.  An automatation scrip may be developed in the future that will perform these tasks upon execution, but that is not included at this time.
+Each of the following sections list instructions to follow in order to complete the installation.  An automatation script may be developed in the future that will perform these tasks upon execution, but that is not included at this time.
 
 ### Create Directory
 You will need to create a folder inside the /opt path
