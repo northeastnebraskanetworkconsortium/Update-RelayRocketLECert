@@ -67,10 +67,10 @@ sudo mkdir /opt/scripts
 
 ### File Locations
 The following files will need to be created.  This can be done with a file transfer or creating the file directly on the server and pasting the file contents into the file. 
-* certbot2lightspeed.bash - /opt/scripts/
-* .environmentFile - /opt/scripts/
-* rocket-letsencrypt.service - /etc/systemd/system/
-* rocket-letsencrypt.timer - /etc/systemd/system/
+* [certbot2lightspeed.bash](https://github.com/northeastnebraskanetworkconsortium/Update-RelayRocketLECert/edit/main/certbot2lightspeed.bash) - /opt/scripts/
+* [.environmentFile](https://github.com/northeastnebraskanetworkconsortium/Update-RelayRocketLECert/edit/main/.environmentFile) - /opt/scripts/
+* [rocket-letsencrypt.service](https://github.com/northeastnebraskanetworkconsortium/Update-RelayRocketLECert/edit/main/rocket-letsencrypt.service) - /etc/systemd/system/
+* [rocket-letsencrypt.timer](https://github.com/northeastnebraskanetworkconsortium/Update-RelayRocketLECert/edit/main/rocket-letsencrypt.timer) - /etc/systemd/system/
 
 ### Make Script Executable
 The certbot2lightspeed.bash file must be executable for this process to work.  Regardless how you got that file on the system (manual creation or file transfer), it's recommended to verify if the file is executable or not.  Run the following command
