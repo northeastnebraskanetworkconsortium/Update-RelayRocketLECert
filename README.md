@@ -66,6 +66,7 @@ sudo mkdir /opt/scripts
 ```
 
 ### File Locations
+The following files will need to be created.  This can be done with a file transfer or creating the file directly on the server and pasting the file contents into the file. 
 * certbot2lightspeed.bash - /opt/scripts/
 * .environmentFile - /opt/scripts/
 * rocket-letsencrypt.service - /etc/systemd/system/
