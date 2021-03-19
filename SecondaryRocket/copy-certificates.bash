@@ -15,6 +15,9 @@ if [ $(($current-$modified)) -lt 86400 ]; then
   # Change permissions on cert
   chmod 644 portal.crt
 
+  # Change ownership on cert & key
+  chown root:www-data portal.*
+  
   # Copy certificates to destination
   cp portal.* ../etc
 
