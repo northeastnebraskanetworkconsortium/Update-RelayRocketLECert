@@ -1,0 +1,13 @@
+# by Andy Boell
+# March 17, 2021
+
+[Unit]
+Description=Timer copies certs to rocket directory and to other server
+
+[Timer]
+Unit=copy-certificates.service
+OnCalendar=*-*-* 08:07
+OnCalendar=*-*-* 23:32
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,13 @@
+# By Andy Boell
+# March 17, 2021
+
+[Unit]
+Description=Moves letsencrypt files to rocket folder
+Wants=copy-certificates.timer
+
+[Service]
+Type=oneshot
+ExecStart=/opt/scripts/copy-certificates.bash
+
+[Install]
+WantedBy=multi-user.target
