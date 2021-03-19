@@ -56,7 +56,7 @@ IMPORTANT NOTES:
    Donating to EFF:                    https://eff.org/donate-le
 ```
 
-## Update Script Installation
+## Primary Server Script Installation
 Each of the following sections list instructions to follow in order to complete the installation.  An automatation script may be developed in the future that will perform these tasks upon execution, but that is not included at this time.
 
 ### Create Directory
@@ -140,7 +140,17 @@ Pass --all to see loaded but inactive timers, too.
 ```
 In the sample output above, the "11h left" in the 2nd column indicates the timer is started and is counting down until it will run next.  Columns 3 and 4 with values of "n/a" just mean the timer has not yet been run.  Notice you can see both the rocket-letsencrypt.timer and snap.certbot.renew.timer (which the later was setup by the original Certbot installation).
 
-### Multiple Server Prequisites (optional)
+### Manually Test Script
+As long as you have completed setup above, you can manually run the script by starting executing the rocket-letsencrypt.service file.
+```bash
+systemctl start rocket-letsencrypt.service
+```
+After the .service file has been executed at least once (either manually or by the .timer), one or two small files are generated for the sole purpose of marking the last time the script was ran (/opt/scripts/lastexecuted) and the last time the script copied and renamed the certificate (/opt/scripts/lastcopied).  The contents of the files just show you which user was used to execute the script, which will be root.  It's the date/time stamp of those files that tells you when it was executed last.
+
+## Secondary Server Script Installation (optional)
+Each of the following sections list instructions to follow in order to complete the installation for the secondary server.  An automatation script may be developed in the future that will perform these tasks upon execution, but that is not included at this time.
+
+### Multiple Server Prequisites 
 In order to seemlessly transfer the files between servers, the sending server must have a public/private key pair generated with the public key copied to the receiving server. The following command elevates the key generation to root, since systemd uses root for the execution of the timer. 
 ```bash
 sudo -H  ssh-keygen -t rsa -b 4096
@@ -152,9 +162,84 @@ sudo -H ssh-copy-id <ftpuser>@<10.1.2.3>
 ```
 In a multiple server configuration, only one server needs to be configured with Certbot; the other server(s) simply need to receive the generated SSL certificate and have them placed in the correct location.
 
-## Manually Test Script
-As long as you have completed setup above, you can manually run the script by starting executing the rocket-letsencrypt.service file.
+### Create Directory
+You will need to create a folder inside the /opt path
 ```bash
-systemctl start rocket-letsencrypt.service
+sudo mkdir /opt/scripts
 ```
-After the .service file has been executed at least once (either manually or by the .timer), one or two small files are generated for the sole purpose of marking the last time the script was ran (/opt/scripts/lastexecuted) and the last time the script copied and renamed the certificate (/opt/scripts/lastcopied).  The contents of the files just show you which user was used to execute the script, which will be root.  It's the date/time stamp of those files that tells you when it was executed last.
+
+### File Locations
+The following files will need to be created.  This can be done with a file transfer or creating the file directly on the server and pasting the file contents into the file. 
+* [copy-certificates.bash](https://github.com/northeastnebraskanetworkconsortium/Update-RelayRocketLECert/edit/main/PrimaryRocket/certbot2lightspeed.bash) - /opt/scripts/
+* [copy-certificates.service](https://github.com/northeastnebraskanetworkconsortium/Update-RelayRocketLECert/edit/main/PrimaryRocket/rocket-letsencrypt.service) - /etc/systemd/system/
+* [copy-certificates.timer](https://github.com/northeastnebraskanetworkconsortium/Update-RelayRocketLECert/edit/main/PrimaryRocket/rocket-letsencrypt.timer) - /etc/systemd/system/
+
+### Make Script Executable
+The copy-certificates.bash file must be executable for this process to work.  Regardless how you got that file on the system (manual creation or file transfer), it's recommended to verify if the file is executable or not.  Run the following command
+```bash
+ls /opt/scripts -al
+```
+You will get an output similar to
+```bash
+drwxr-xr-x 2 root root 4096 Mar 19 11:31 .
+drwxr-xr-x 3 root root 4096 Mar 19 11:27 ..
+-rw-r--r-- 1 root root 1043 Mar 19 11:30 copy-certificates.bash
+```
+The permissions for copy-certificates.bash need to be "-rwxr-xr-x".  To change update to those permissions, execute the following command
+```bash
+ sudo chmod 755 /opt/scripts/copy-certificates.bash
+ ```
+
+### Enable and Start Services
+Once the files have been placed in the correct folders and the .environmentFile has been modified, the services need to be enabled.
+```bash
+systemctl enable copy-certificates.service
+systemctl enable copy-certificates.timer
+```
+The service successfully runs when there is no output that follows the running of that command, if running as root.  If running as a non-root user you will be prompted for your user password (commands only work if user is in sudoers file).  
+Next, you need to start the timer file.  You do not need to start the .service file as the .timer file will start it at the appropriate time.
+```bash
+systemctl start copy-certificates.timer
+```
+If you would like to manually verify the service is loaded, you may execute the following command:
+```bash
+systemctl status copy-certificates.timer
+```
+You will get an output similar to
+```bash
+● copy-certificates.timer - Timer copies certs to rocket directory and to other server
+   Loaded: loaded (/etc/systemd/system/copy-certificates.timer; disabled; vendor preset: enabled)
+   Active: active (waiting) since Tue 2021-03-16 11:08:21 CDT; 2 days ago
+  Trigger: Thu 2021-03-18 23:32:00 CDT; 11h left
+
+Mar 16 11:08:21 relayrocket1 systemd[1]: Started Timer copies certs to rocket directory and to other server.
+```
+
+To check if the timers are enabled at any given point, you can execute this command
+```bash
+systemctl list-timers
+```
+You will get an output similar to
+```bash
+NEXT                         LEFT          LAST                         PASSED       UNIT                         ACTIVATES
+Fri 2021-03-19 12:00:57 CDT  22min left    Fri 2021-03-19 11:04:09 CDT  34min ago    anacron.timer                anacron.service
+Fri 2021-03-19 13:32:00 CDT  1h 53min left Fri 2021-03-19 10:51:09 CDT  47min ago    snap.certbot.renew.timer     snap.certbot.renew.service
+Fri 2021-03-19 14:16:20 CDT  2h 37min left Thu 2021-03-18 14:16:20 CDT  21h ago      systemd-tmpfiles-clean.timer systemd-tmpfiles-clean.service
+Fri 2021-03-19 18:06:29 CDT  6h left       Fri 2021-03-19 02:17:09 CDT  9h ago       motd-news.timer              motd-news.service
+Fri 2021-03-19 19:28:55 CDT  7h left       Fri 2021-03-19 11:33:39 CDT  5min ago     apt-daily.timer              apt-daily.service
+Fri 2021-03-19 23:32:00 CDT  11h left      n/a                          n/a          copy-certificates.timer      copy-certificates.service
+Sat 2021-03-20 06:42:16 CDT  19h left      Fri 2021-03-19 06:49:26 CDT  4h 49min ago apt-daily-upgrade.timer      apt-daily-upgrade.service
+Mon 2021-03-22 00:00:00 CDT  2 days left   Thu 2021-03-18 14:01:26 CDT  21h ago      fstrim.timer                 fstrim.service
+
+8 timers listed.
+
+Pass --all to see loaded but inactive timers, too.
+```
+In the sample output above, the "11h left" in the 2nd column indicates the timer is started and is counting down until it will run next.  Columns 3 and 4 with values of "n/a" just mean the timer has not yet been run.  Notice you can see both the rocket-letsencrypt.timer and snap.certbot.renew.timer (which the later was setup by the original Certbot installation).
+
+### Manually Test Script
+As long as you have completed setup above, you can manually run the script by starting executing the copy-certificates.service file.
+```bash
+systemctl start copy-certificates.service
+```
+After the .service file has been executed at least once (either manually or by the .timer), one small file is generated for the sole purpose of marking the last time the script was ran (/opt/scripts/lastexecuted).  The contents of the files just show you which user was used to execute the script, which will be root.  It's the date/time stamp of that file that tells you when it was executed last.

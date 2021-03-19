@@ -5,14 +5,19 @@
 # Change directory
 cd /usr/local/rocket/letsencrypt/
 
-# Change permissions on key
-chmod 640 portal.key
+current=`date +%s`
+modified=`stat -c "%Y" portal.key`
+if [ $(($current-$modified)) -lt 86400 ]; then
 
-# Change permissions on cert
-chmod 644 portal.crt
+  # Change permissions on key
+  chmod 640 portal.key
 
-# Copy certificates to destination
-mv portal.* ../etc
+  # Change permissions on cert
+  chmod 644 portal.crt
 
-# Restart the Nginx Service
-systemctl restart nginx.service
+  # Copy certificates to destination
+  cp portal.* ../etc
+
+  # Restart the Nginx Service
+  systemctl restart nginx.service
+fi
