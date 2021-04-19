@@ -8,7 +8,7 @@ sudo snap install core; sudo snap refresh core
 sudo apt-get remove certbot
 sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
-sudo certbot certonly --nginx
+sudo certbot certonly 
 ```
 If for some reason you get an error when issuing the snap command, you may need to manually install snapd.
 ```bash
@@ -19,9 +19,16 @@ sudo apt install snapd
 The very first time you execute the certbot command you will be prompted to go through the initial setup.  You will be asked a few questions.  Your output will look similar to the following:
 ```bash
 Saving debug log to /var/log/letsencrypt/letsencrypt.log
-Plugins selected: Authenticator nginx, Installer nginx
+
+How would you like to authenticate with the ACME CA?
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+1: Spin up a temporary webserver (standalone)
+2: Place files in webroot directory (webroot)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+Select the appropriate number [1-2] then [enter] (press 'c' to cancel): 1
+Plugins selected: Authenticator standalone, Installer None
 Enter email address (used for urgent renewal and security notices)
- (Enter 'c' to cancel): user@school.org
+ (Enter 'c' to cancel): email@school.org
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Please read the Terms of Service at
@@ -29,6 +36,7 @@ https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf. You must
 agree in order to register with the ACME server. Do you agree?
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 (Y)es/(N)o: Y
+
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Would you be willing, once your first certificate is successfully issued, to
