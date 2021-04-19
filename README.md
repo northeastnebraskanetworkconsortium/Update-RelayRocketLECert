@@ -10,6 +10,12 @@ sudo snap install --classic certbot
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
 sudo certbot certonly --nginx
 ```
+If for some reason you get an error when issuing the snap command, you may need to manually install snapd.
+```bash
+sudo apt-get update
+sudo apt install snapd
+```
+
 The very first time you execute the certbot command you will be prompted to go through the initial setup.  You will be asked a few questions.  Your output will look similar to the following:
 ```bash
 Saving debug log to /var/log/letsencrypt/letsencrypt.log
