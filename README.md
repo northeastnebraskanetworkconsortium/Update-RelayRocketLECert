@@ -161,6 +161,8 @@ In order to seemlessly transfer the files between servers, the sending server mu
 ```bash
 sudo -H  ssh-keygen -t rsa -b 4096
 ```
+You will be prompted to enter a save location.  The default location of '/root/.ssh/id_rsa' is fine.  Next, you will be prompted to enter a passphrase, but it can be left empty.  Go ahead and leave it empty.
+
 Next, you must copy the public key to the remote server.  Again, the following command elevates to copy of the key from the root user, since systemd uses root for the execution of the timer. 
 ```bash
 # Where <ftpuser> represents the ftp user on the remote server and <10.1.2.3> represents the IP address of the local server
