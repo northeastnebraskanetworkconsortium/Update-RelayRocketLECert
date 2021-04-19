@@ -170,6 +170,7 @@ sudo -H ssh-copy-id <ftpuser>@<10.1.2.3>
 ```
 In a multiple server configuration, only one server needs to be configured with Certbot; the other server(s) simply need to receive the generated SSL certificate and have them placed in the correct location.
 
+### The following commands are to be performed on the secondary server
 ### Create Directory
 You will need to create a folder inside the /opt path
 ```bash
