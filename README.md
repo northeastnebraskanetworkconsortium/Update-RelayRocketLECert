@@ -76,7 +76,7 @@ The following files will need to be created.  This can be done with a file trans
 * [certbot2lightspeed.bash](https://github.com/northeastnebraskanetworkconsortium/Update-RelayRocketLECert/blob/main/PrimaryRocket/certbot2lightspeed.bash) - /opt/scripts/
 * [.environmentFile](https://github.com/northeastnebraskanetworkconsortium/Update-RelayRocketLECert/blob/main/PrimaryRocket/.environmentFile) - /opt/scripts/
 * [rocket-letsencrypt.service](https://github.com/northeastnebraskanetworkconsortium/Update-RelayRocketLECert/blob/main/PrimaryRocket/rocket-letsencrypt.service) - /etc/systemd/system/
-* [rocket-letsencrypt.timer](https://github.com/northeastnebraskanetworkconsortium/Update-RelayRocketLECert/edit/main/rocket-letsencrypt.timer) - /etc/systemd/system/
+* [rocket-letsencrypt.timer](https://github.com/northeastnebraskanetworkconsortium/Update-RelayRocketLECert/blob/main/PrimaryRocket/rocket-letsencrypt.timer) - /etc/systemd/system/
 
 ### Make Script Executable
 The certbot2lightspeed.bash file must be executable for this process to work.  Regardless how you got that file on the system (manual creation or file transfer), it's recommended to verify if the file is executable or not.  Run the following command
