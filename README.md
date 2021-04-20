@@ -186,6 +186,13 @@ sudo mkdir /opt/scripts
 sudo mkdir /usr/local/rocket/letsencrypt
 ```
 
+### Change Folder Permissions
+The folder to receive the scripts from the other server needs to have proper permissions of the account that will be used.
+```bash
+sudo chown <user>:<user> /usr/local/rocket/letsencrypt
+```
+* please note that the <user> references the actual user account, i.e. adminacct
+
 ### File Locations
 The following files will need to be created.  This can be done with a file transfer or creating the file directly on the server and pasting the file contents into the file. 
 * [copy-certificates.bash](https://github.com/northeastnebraskanetworkconsortium/Update-RelayRocketLECert/blob/main/SecondaryRocket/copy-certificates.bash) - /opt/scripts/
