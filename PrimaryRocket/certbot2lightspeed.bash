@@ -41,6 +41,7 @@ if [ $(($current-$modified)) -lt 86400 ]; then
 
 # Copy files to next relay rocket only if the ftp user is not null
   if [$2 != 'NULL']; then
+    ssh $2@$3 "rm -f /usr/local/rocket/letsencrypt/portal.*"
     scp /usr/local/rocket/etc/portal.* $2@$3:/usr/local/rocket/letsencrypt
   fi
 fi
