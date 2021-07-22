@@ -7,6 +7,18 @@
 # Flag to indicate last time script was ran
 echo $(id) > /opt/scripts/lastexecuted
 
+# Stops Lightspeed so Certbot can run
+systemctl stop nginx.service
+
+# Manually runs certbot renew
+certbot renew
+
+# Wait a little more than 2 minutes for renew script to complete
+sleep 130
+
+# Starts Lightspeed just in case the certificate is not renewed at this time
+systemctl start nginx.service
+
 # Change directory
 cd /etc/letsencrypt/live/$1
 
