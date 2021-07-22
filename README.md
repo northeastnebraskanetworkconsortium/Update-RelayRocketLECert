@@ -268,3 +268,10 @@ As long as you have completed setup above, you can manually run the script by st
 systemctl start copy-certificates.service
 ```
 After the .service file has been executed at least once (either manually or by the .timer), one small file is generated for the sole purpose of marking the last time the script was ran (/opt/scripts/lastexecuted).  The contents of the files just show you which user was used to execute the script, which will be root.  It's the date/time stamp of that file that tells you when it was executed last.
+
+ ## Known Issue for Multi-Server Environments
+ When more than one Lightspeed server is in place, the public DNS will likely contain multiple public IP addresses to represent the single FQDN it is requesting the certificate for.  As a result, there a chance that the Certbot renewal service will attempt to access the challenge response by visiting the wrong server (noted as Secondary).  Since Certbot is not present on the secondary servrer, the temporary webserver that is stood up for the renewal process is absence and the challenge fails.
+ 
+To manually circumvent this, modify the firewall rules to temporarily block access to the secondary Lightspeed server, therefore forcing all traffic to fail and to be re-requested to the primary Lightspeed server which contains the challenge.  This manual process has worked once, but due to lack of resources and time, it has not been tested very much.
+ 
+ It is possible to add a rule to the script to utilize the firewall's API to temporarily disable the rule to the secondary server, but that is currently out of the scope of this script.
